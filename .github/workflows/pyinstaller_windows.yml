@@ -18,5 +18,6 @@ jobs:
     - name: Run pyinstaller
       shell : powershell
       run: |
-        pyinstaller -D RapidVideOCR_ui.py --add-data="./rapidocr_onnxruntime/models;rapidocr_onnxruntime/models" --add-data="./rapidocr_onnxruntime/*.yaml;rapidocr_onnxruntime"
+        ls
+        python -m pyinstaller RapidVideOCR_ui.spec
         ls dist
