@@ -10,15 +10,13 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - name: Pull latest code
+      uses: actions/checkout@v3
+
     - name: Install env
       shell: powershell
       run: |
         pip install pyqt5, pyinstaller, tqdm, rapidocr_onnxruntime
-
-    - name: list all file
-      shell: cmd
-      run:  |
-        dir .
 
     - name: Run pyinstaller
       shell : powershell
