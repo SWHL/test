@@ -15,9 +15,12 @@ jobs:
       run: |
         pip install pyqt5, pyinstaller, tqdm, rapidocr_onnxruntime
 
+    - name: list all file
+      shell: cmd
+      run:  |
+        dir .
+
     - name: Run pyinstaller
       shell : powershell
       run: |
-        dir
         pyinstaller RapidVideOCR_ui.spec
-        dir dist
