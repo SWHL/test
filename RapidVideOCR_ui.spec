@@ -1,10 +1,12 @@
 # -*- mode: python ; coding: utf-8 -*-
 from pathlib import Path
 
+import rapidocr_onnxruntime
+
 block_cipher = None
 
 package_name = 'rapidocr_onnxruntime'
-install_dir = Path(package_name.__file__).resolve().parent
+install_dir = Path(rapidocr_onnxruntime.__file__).resolve().parent
 model_dir_map = (str(install_dir / 'models'), f'{package_name}/models')
 yaml_path_map = (str(install_dir / '*.yaml'), package_name)
 
