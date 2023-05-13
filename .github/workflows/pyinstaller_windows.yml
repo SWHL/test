@@ -18,6 +18,6 @@ jobs:
     - name: Run pyinstaller
       shell : powershell
       run: |
-        ls
+        dir
         pyinstaller RapidVideOCR_ui.spec
-        ls dist
+        dir dist
