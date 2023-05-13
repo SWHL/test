@@ -19,8 +19,9 @@ jobs:
         pip install pyqt5, pyinstaller, tqdm, rapidocr_onnxruntime
 
     - name: Run pyinstaller
-      shell : powershell
+      shell : bash
       run: |
+        mv ui/* .
         pyinstaller RapidVideOCR_ui.spec
 
     - name: create release
