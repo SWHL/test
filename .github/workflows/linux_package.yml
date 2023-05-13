@@ -37,7 +37,7 @@ jobs:
         draft: true
         prerelease: false
 
-    - name: zip the artifect dir into a zip
+    - name: zip the artifact dir into a zip
       run: |
         zip -r /home/runner/work/test/test/dist/RapidVideOCR.zip /home/runner/work/test/test/dist/RapidVideOCR
 
