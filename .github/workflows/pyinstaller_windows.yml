@@ -23,7 +23,8 @@ jobs:
       run: |
         pyinstaller RapidVideOCR_ui.spec
 
-    - uses: actions/upload-artifact@v2
+    - name: upload artifact
+      uses: actions/upload-artifact@v2
       with:
         name: RapidVideOCR_ui
         path: dist/RapidVideOCR_ui
