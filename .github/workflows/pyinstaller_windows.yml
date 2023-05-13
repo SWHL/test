@@ -1,0 +1,22 @@
+name: Auto generate exe
+
+on:
+  push:
+    branches: main
+
+jobs:
+  build:
+    name: build src
+    runs-on: windows-latest
+
+    steps:
+    - name: Install env
+      shell: powershell
+      run: |
+        pip install pyqt5, pyinstaller, tqdm, rapidocr_onnxruntime
+
+    - name: Run pyinstaller
+      shell : powershell
+      run: |
+        pyinstaller -D RapidVideOCR_ui.py --add-data="./rapidocr_onnxruntime/models;rapidocr_onnxruntime/models" --add-data="./rapidocr_onnxruntime/*.yaml;rapidocr_onnxruntime"
+        ls dist
