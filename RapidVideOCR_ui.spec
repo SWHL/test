@@ -1,14 +1,18 @@
 # -*- mode: python ; coding: utf-8 -*-
-
+from pathlib import Path
 
 block_cipher = None
 
+package_name = 'rapidocr_onnxruntime'
+install_dir = Path(package_name.__file__).resolve().parent
+model_dir_map = (str(install_dir / 'models'), f'{package_name}/models')
+yaml_path_map = (str(install_dir / '*.yaml'), package_name)
 
 a = Analysis(
     ['RapidVideOCR_ui.py'],
     pathex=[],
     binaries=[],
-    datas=[('./rapidocr_onnxruntime/models', 'rapidocr_onnxruntime/models'), ('./rapidocr_onnxruntime/*.yaml', 'rapidocr_onnxruntime')],
+    datas=[model_dir_map, yaml_path_map],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
