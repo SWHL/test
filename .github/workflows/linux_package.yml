@@ -39,7 +39,7 @@ jobs:
 
     - name: zip the artifect dir into a zip
       run: |
-        zip -r D:\a\test\test\dist\RapidVideOCR.zip D:\a\test\test\dist\RapidVideOCR
+        zip -r /home/runner/work/test/test/dist/RapidVideOCR.zip /home/runner/work/test/test/dist/RapidVideOCR
 
     - name: Upload release asset
       id: upload-release-asset
