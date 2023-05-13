@@ -19,5 +19,5 @@ jobs:
       shell : powershell
       run: |
         ls
-        python -m pyinstaller RapidVideOCR_ui.spec
+        pyinstaller RapidVideOCR_ui.spec
         ls dist
