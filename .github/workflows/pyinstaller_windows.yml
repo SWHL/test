@@ -24,8 +24,7 @@ jobs:
       run: |
         mv ui/* .
         pyinstaller RapidVideOCR_ui.spec
-        version = $(get_pypi_latest_version rapid_videocr)
-        echo "version=$version" >> $GITHUB_OUTPUT
+        echo "VERSION=$(get_pypi_latest_version rapid_videocr)" >> $GITHUB_OUTPUT
 
     - name: create release
       id: create_release
@@ -49,7 +48,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VERSIOIN: ${{ steps.run_pyinstaller.outputs.version }}
+          VERSIOIN: ${{ steps.run_pyinstaller.outputs.VERSION }}
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: dist/RapidVideOCR_ui.zip
