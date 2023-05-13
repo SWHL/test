@@ -10,11 +10,12 @@ install_dir = Path(rapidocr_onnxruntime.__file__).resolve().parent
 model_dir_map = (str(install_dir / 'models'), f'{package_name}/models')
 yaml_path_map = (str(install_dir / '*.yaml'), package_name)
 
+
 a = Analysis(
-    ['RapidVideOCR_ui.py'],
+    ['RapidVideOCR.py'],
     pathex=[],
     binaries=[],
-    datas=[model_dir_map, yaml_path_map],
+    datas=[],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -32,7 +33,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='RapidVideOCR_ui',
+    name='RapidVideOCR',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -53,5 +54,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='RapidVideOCR_ui',
+    name='RapidVideOCR',
 )
