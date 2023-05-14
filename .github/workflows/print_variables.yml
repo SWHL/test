@@ -1,17 +1,19 @@
 name: Event Loggger
 on:
   push:
-    branches: develop
+    branches: main
 
 jobs:
   log-github-event-goodies:
     name: "LOG Everything on GitHub Event"
-    runs-on: windows-2022
+    runs-on: macos-13
     steps:
       - name: Pull latest code
         uses: actions/checkout@v3
 
       - name: Logging
-        shell: powershell
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            ZIP_NAME: RapidVideOCR-${{ steps.run_pyinstaller.outputs.VERSION }}-${{ runner.os }}-${{ runner.arch }}-no-installer.zip
         run: |
-          Write-Host "${{ github.workspace }}\dist\RapidVideOCR"
+          echo $ZIP_NAME
