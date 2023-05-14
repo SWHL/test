@@ -2,7 +2,7 @@ name: Windows Auto generate exe
 
 on:
   push:
-    branches: main
+    branches: develop
     paths:
       - 'rapid_videocr/**'
       - 'docs/doc_whl.md'
