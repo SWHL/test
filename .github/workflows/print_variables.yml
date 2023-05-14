@@ -8,6 +8,10 @@ jobs:
     name: "LOG Everything on GitHub Event"
     runs-on: ubuntu-latest
     steps:
+      - name: Pull latest code
+        uses: actions/checkout@v3
+
       - name: Logging
         run: |
-          echo "${{ GITHUB_WORKSPACE }}"
+          echo ${{ github.workspace }}
+          echo $GITHUB_WORKSPACE
