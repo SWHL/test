@@ -2,7 +2,7 @@ name: Auto generate exe
 
 on:
   push:
-    branches: main
+    branches: develop
 
 jobs:
   build:
@@ -49,7 +49,7 @@ jobs:
     - if: matrix.os == 'windows-2022'
       name: zip the artifact dir into a zip
       run: |
-        powershell Compress-Archive D:\a\test\test\dist\RapidVideOCR D:\a\test\test\dist\RapidVideOCR.zip
+        powershell Compress-Archive $GITHUB_WORKSPACE\dist\RapidVideOCR $GITHUB_WORKSPACE\dist\RapidVideOCR.zip
 
     - if: matrix.os != 'windows-2022'
       run: |
