@@ -2,9 +2,26 @@ name: Auto generate exe
 
 on:
   push:
-    branches: develop
+    branches: main
 
 jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - name: create_release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          draft: true
+          prerelease: false
+          release_name: Automated Release ${{ github.ref }}
+          tag_name: ${{ github.ref }}
+          body: This is an automated release for ${{ github.ref }}. It will be used to speed up `npm install`.
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
   build:
     name: build
     runs-on: ${{ matrix.os }}
@@ -60,9 +77,9 @@ jobs:
       uses: actions/upload-release-asset@v1
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ZIP_NAME: RapidVideOCR-${{ steps.run_pyinstaller.outputs.VERSION }}-${{ github.workspace }}-${{ github.workspace }}-no-installer.zip
+          ZIP_NAME: RapidVideOCR-${{ steps.run_pyinstaller.outputs.VERSION }}-${{ runner.os }}-${{ runner.arch }}-no-installer.zip
       with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ needs.create_release.outputs.upload_url }}
           asset_path: dist/RapidVideOCR.zip
           asset_name: ${{ env.ZIP_NAME }}
           asset_content_type: application/zip
