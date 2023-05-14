@@ -48,11 +48,11 @@ jobs:
 
     - name: zip the artifact dir into a zip
       if: matrix.os == 'windows-2022'
-        run: |
-          powershell Compress-Archive D:\a\test\test\dist\RapidVideOCR D:\a\test\test\dist\RapidVideOCR.zip
+      run: |
+        powershell Compress-Archive D:\a\test\test\dist\RapidVideOCR D:\a\test\test\dist\RapidVideOCR.zip
       if: matrix.os != 'windows-2022'
-        run: |
-          zip -r $GITHUB_WORKSPACE/dist/RapidVideOCR.zip $GITHUB_WORKSPACE/dist/RapidVideOCR
+      run: |
+        zip -r $GITHUB_WORKSPACE/dist/RapidVideOCR.zip $GITHUB_WORKSPACE/dist/RapidVideOCR
 
     - name: Upload release asset
       id: upload-release-asset
