@@ -45,13 +45,14 @@ jobs:
     - name: zip the artifact dir into a zip
       run: |
         zip -r /Users/runner/work/test/test/dist/RapidVideOCR.zip /Users/runner/work/test/test/dist/RapidVideOCR
+        ls /Users/runner/work/test/test/dist/
 
     - name: Upload release asset
       id: upload-release-asset
       uses: actions/upload-release-asset@v1
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ZIP_NAME: RapidVideOCR-${{ steps.run_pyinstaller.outputs.VERSION }}-linux-no-installer.zip
+          ZIP_NAME: RapidVideOCR-${{ steps.run_pyinstaller.outputs.VERSION }}-Darwin-21.6.0-x86_64-i386-64bit-no-installer.zip
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: dist/RapidVideOCR.zip
