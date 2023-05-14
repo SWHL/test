@@ -10,5 +10,4 @@ jobs:
     steps:
       - name: Logging
         run: |
-          # echo "${{toJSON(github.event)}}"
           echo "${{ GITHUB_WORKSPACE }}"
