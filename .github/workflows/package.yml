@@ -27,7 +27,6 @@ jobs:
         os: ['macos-12', 'ubuntu-22.04', 'windows-2022']
 
     steps:
-      - needs: create_release
       - name: Pull latest code
         uses: actions/checkout@v3
 
@@ -74,6 +73,7 @@ jobs:
       - name: Upload release asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
+        needs: create_release
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             ZIP_NAME: RapidVideOCR-${{ steps.run_pyinstaller.outputs.VERSION }}-${{ runner.os }}-${{ runner.arch }}-no-installer.zip
