@@ -2,7 +2,9 @@ name: Auto generate exe
 
 on:
   push:
-    branches: main
+    branches: develop
+    # paths:
+    #   - 'rapid_videocr/**'
 
 jobs:
   create_release:
@@ -25,7 +27,7 @@ jobs:
     needs: create_release
     strategy:
       matrix:
-        os: ['macos-12', 'ubuntu-22.04', 'windows-2022']
+        os: ['macos-12', 'macos-13', 'ubuntu-22.04', 'windows-2022']
 
     steps:
       - name: Pull latest code
@@ -51,7 +53,6 @@ jobs:
           mv ui/* .
           pyinstaller RapidVideOCR.spec
           echo "VERSION=$(get_pypi_latest_version rapid_videocr)" >> $GITHUB_OUTPUT
-          echo ${{ needs.create_release.outputs.upload_url }}
 
       - if: matrix.os == 'windows-2022'
         name: zip the artifact dir into a zip
