@@ -1,4 +1,4 @@
-name: Linux Auto generate exe
+name: macos Auto generate exe
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     name: build src
-    runs-on: ubuntu-22.04
+    runs-on: macos-12
 
     steps:
     - name: Pull latest code
