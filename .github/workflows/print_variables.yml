@@ -14,5 +14,4 @@ jobs:
       - name: Logging
         shell: powershell
         run: |
-          Write-Host ${{ github.workspace }}
-          Write-Host "$GITHUB_WORKSPACE\dist\RapidVideOCR"
+          Write-Host "${{ github.workspace }}\dist\RapidVideOCR"
