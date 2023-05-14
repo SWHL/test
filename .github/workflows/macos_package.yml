@@ -24,7 +24,7 @@ jobs:
 
     - name: Install env
       run: |
-        pip3 install pyqt5 pyinstaller tqdm rapidocr_onnxruntime==1.2.8 get_pypi_latest_version -i https://pypi.org/simple
+        pip3 install pyqt5 pyinstaller tqdm rapidocr_onnxruntime get_pypi_latest_version
 
     - name: Run pyinstaller
       id: run_pyinstaller
@@ -44,7 +44,7 @@ jobs:
 
     - name: zip the artifact dir into a zip
       run: |
-        zip -r /home/runner/work/test/test/dist/RapidVideOCR.zip /home/runner/work/test/test/dist/RapidVideOCR
+        zip -r /Users/runner/work/test/test/dist/RapidVideOCR.zip /Users/runner/work/test/test/dist/RapidVideOCR
 
     - name: Upload release asset
       id: upload-release-asset
