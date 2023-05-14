@@ -1,19 +1,36 @@
 name: Event Loggger
 on:
   push:
-    branches: main
+    branches: develop
 
 jobs:
-  log-github-event-goodies:
-    name: "LOG Everything on GitHub Event"
-    runs-on: macos-13
-    steps:
-      - name: Pull latest code
-        uses: actions/checkout@v3
+  build:
+    name: build
+    runs-on: ${{ matrix.os }}
+    needs: create_release
+    strategy:
+      matrix:
+        os: ['macos-12', 'macos-13', 'ubuntu-22.04', 'windows-2022']
 
-      - name: Logging
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            ZIP_NAME: RapidVideOCR-${{ steps.run_pyinstaller.outputs.VERSION }}-${{ runner.os }}-${{ runner.arch }}-no-installer.zip
-        run: |
-          echo $ZIP_NAME
+    steps:
+    - name: Logging
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          - if: matrix.os == 'macos-13'
+          ZIP_NAME: RapidVideOCR-${{ steps.run_pyinstaller.outputs.VERSION }}-${{ runner.os }}-${{ runner.arch }}-no-installer.zip
+      run: |
+        echo $ZIP_NAME
+
+  # log-github-event-goodies:
+  #   name: "LOG Everything on GitHub Event"
+  #   runs-on: macos-13
+  #   steps:
+  #     - name: Pull latest code
+  #       uses: actions/checkout@v3
+
+  #     - name: Logging
+  #       env:
+  #           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #           ZIP_NAME: RapidVideOCR-${{ steps.run_pyinstaller.outputs.VERSION }}-${{ runner.os }}-${{ runner.arch }}-no-installer.zip
+  #       run: |
+  #         echo $ZIP_NAME
