@@ -15,7 +15,7 @@ a = Analysis(
     ['RapidVideOCR.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[model_dir_map, yaml_path_map],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
