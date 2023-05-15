@@ -7,17 +7,23 @@ block_cipher = None
 
 package_name = 'rapidocr_onnxruntime'
 install_dir = Path(rapidocr_onnxruntime.__file__).resolve().parent
-model_dir_map = (str(install_dir / 'models'), f'{package_name}/models')
-yaml_path_map = (str(install_dir / '*.yaml'), package_name)
-det_dir = (str(install_dir / 'ch_ppocr_v3_det' / '*.yaml'), f'{package_name}/ch_ppocr_v3_det')
-cls_dir = (str(install_dir / 'ch_ppocr_v2_cls' / '*.yaml'), f'{package_name}/ch_ppocr_v2_cls')
-rec_dir = (str(install_dir / 'ch_ppocr_v3_rec' / '*.yaml'), f'{package_name}/ch_ppocr_v3_rec')
+
+onnx_paths = list(install_dir.rglob('*.onnx'))
+yaml_paths = list(install_dir.rglob('*.yaml'))
+
+onnx_add_data = [(str(v.parent), f'{package_name}/{v.parent.name}')
+                 for v in onnx_paths]
+
+yaml_add_data = [(str(v.parent / '*.yaml'), f'{package_name}/{v.parent.name}')
+                 for v in yaml_paths]
+
+add_data = list(set(yaml_add_data + onnx_add_data))
 
 a = Analysis(
     ['RapidVideOCR.py'],
     pathex=[],
     binaries=[],
-    datas=[model_dir_map, yaml_path_map, det_dir, cls_dir, rec_dir],
+    datas=add_data,
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
