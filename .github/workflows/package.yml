@@ -16,7 +16,7 @@ jobs:
         uses: srfrnk/current-time@master
         id:  get_cur_time
         with:
-            format: YYYY-MM-DD
+            format: YYYY-MM-DD-HH-mm-ss
       - name: create_release
         id: create_release
         uses: marvinpinto/action-automatic-releases@latest
@@ -32,7 +32,7 @@ jobs:
     needs: create_release
     strategy:
       matrix:
-        os: ['macos-12', 'macos-13', 'ubuntu-22.04', 'windows-2022']
+        os: ['macos-12', 'macos-13', 'ubuntu-22.04', 'windows-2022', 'ubuntu-20.04']
 
     steps:
       - name: Pull latest code
