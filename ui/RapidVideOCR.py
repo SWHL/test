@@ -11,7 +11,6 @@ from PyQt5.QtWidgets import (QApplication, QDialogButtonBox, QFileDialog,
                              QPushButton, QRadioButton, QWidget)
 
 from rapid_videocr import RapidVideOCR
-from get_pypi_latest_version import GetPyPiLatestVersion
 
 
 class RapidVideOCRUI(QWidget):
@@ -20,12 +19,7 @@ class RapidVideOCRUI(QWidget):
 
         self.main_name = 'RapidVideOCR'
 
-        obtainer = GetPyPiLatestVersion()
-
-        MODULE_NAME = 'rapid_videocr'
-        latest_version = obtainer(MODULE_NAME)
-        VERSION_NUM = obtainer.version_add_one(latest_version)
-        self.version = VERSION_NUM
+        self.version = 'v0.0.1'
 
         self.setWindowTitle(f'{self.main_name} {self.version}')
         self.resize(654, 265)
