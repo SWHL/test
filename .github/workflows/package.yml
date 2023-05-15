@@ -59,7 +59,7 @@ jobs:
         env:
             ZIP_NAME: RapidVideOCR-${{ steps.run_pyinstaller.outputs.VERSION }}-${{ matrix.os }}-${{ runner.arch }}-no-installer.zip
         run: |
-          powershell Compress-Archive ${{ github.workspace }}\dist\RapidVideOCR ${{ github.workspace }}\dist\${{ env.ZIP_NAME }}.zip
+          powershell Compress-Archive ${{ github.workspace }}\dist\RapidVideOCR ${{ github.workspace }}\dist\${{ env.ZIP_NAME }}
 
       - if: matrix.os != 'windows-2022'
         env:
