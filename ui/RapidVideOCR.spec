@@ -14,8 +14,13 @@ yaml_paths = list(install_dir.rglob('*.yaml'))
 onnx_add_data = [(str(v.parent), f'{package_name}/{v.parent.name}')
                  for v in onnx_paths]
 
-yaml_add_data = [(str(v.parent / '*.yaml'), f'{package_name}/{v.parent.name}')
-                 for v in yaml_paths]
+yaml_add_data = []
+for v in yaml_paths:
+    if package_name == v.parent.name:
+        yaml_add_data.append((str(v.parent / '*.yaml'), package_name))
+    else:
+        yaml_add_data.append(
+            (str(v.parent / '*.yaml'), f'{package_name}/{v.parent.name}'))
 
 add_data = list(set(yaml_add_data + onnx_add_data))
 
