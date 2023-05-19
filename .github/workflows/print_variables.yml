@@ -7,16 +7,15 @@ jobs:
   build:
     name: build
     runs-on: ${{ matrix.os }}
-    needs: create_release
     strategy:
       matrix:
         os: ['windows-2022']
 
     steps:
-    - name: Val2
-      id: set-Val2
-      run: echo "Val2=Moe" >> $env:GITHUB_OUTPUT
-      shell: pwsh
+      - name: Val2
+        id: set-Val2
+        run: echo "Val2=Moe" >> $env:GITHUB_OUTPUT
+        shell: pwsh
 
   # log-github-event-goodies:
   #   name: "LOG Everything on GitHub Event"
