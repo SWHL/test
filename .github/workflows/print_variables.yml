@@ -1,7 +1,7 @@
 name: Event Loggger
 on:
   push:
-    branches: develop
+    branches: main
 
 jobs:
   build:
@@ -10,16 +10,13 @@ jobs:
     needs: create_release
     strategy:
       matrix:
-        os: ['macos-12', 'macos-13', 'ubuntu-22.04', 'windows-2022']
+        os: ['windows-2022']
 
     steps:
-    - name: Logging
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          - if: matrix.os == 'macos-13'
-          ZIP_NAME: RapidVideOCR-${{ steps.run_pyinstaller.outputs.VERSION }}-${{ runner.os }}-${{ runner.arch }}-no-installer.zip
-      run: |
-        echo $ZIP_NAME
+    - name: Val2
+      id: set-Val2
+      run: echo "Val2=Moe" >> $env:GITHUB_OUTPUT
+      shell: pwsh
 
   # log-github-event-goodies:
   #   name: "LOG Everything on GitHub Event"

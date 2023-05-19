@@ -2,7 +2,7 @@ name: Auto generate exe
 
 on:
   push:
-    branches: main
+    branches: develop
     # paths:
     #   - 'rapid_videocr/**'
 
