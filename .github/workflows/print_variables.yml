@@ -21,7 +21,7 @@ jobs:
             Win_DIST_DIR: ${{ github.workspace }}\ocrweb\rapidocr_web\dist\
         run: |
           echo $ZIP_NAME
-          echo "Win_ZIP_FULL_PATH=$Win_DIST_DIR\$ZIP_WIN_NAME" >> $GITHUB_OUTPUT
+          echo "Win_ZIP_FULL_PATH=$Win_DIST_DIR\$ZIP_NAME" >> $GITHUB_OUTPUT
 
       - name: Print
         shell: pwsh
