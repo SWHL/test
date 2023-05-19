@@ -13,18 +13,18 @@ jobs:
 
     steps:
      - name: Logging
-        id: zip_name_windows
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            ZIP_NAME: RapidVideOCR-${{ steps.run_pyinstaller.outputs.VERSION }}-${{ runner.os }}-${{ runner.arch }}-no-installer.zip
-            Win_DIST_DIR: ${{ github.workspace }}\ocrweb\rapidocr_web\dist\
-        run: |
-          echo $ZIP_NAME
-          echo "Win_ZIP_FULL_PATH=$Win_DIST_DIR\$ZIP_WIN_NAME" >> $GITHUB_OUTPUT
+      id: zip_name_windows
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ZIP_NAME: RapidVideOCR-${{ steps.run_pyinstaller.outputs.VERSION }}-${{ runner.os }}-${{ runner.arch }}-no-installer.zip
+          Win_DIST_DIR: ${{ github.workspace }}\ocrweb\rapidocr_web\dist\
+      run: |
+        echo $ZIP_NAME
+        echo "Win_ZIP_FULL_PATH=$Win_DIST_DIR\$ZIP_WIN_NAME" >> $GITHUB_OUTPUT
 
      - name: Print
-        run: |
-          Write-Host ${{ steps.zip_name_windows.outputs.Win_ZIP_FULL_PATH }}
+      run: |
+        Write-Host ${{ steps.zip_name_windows.outputs.Win_ZIP_FULL_PATH }}
 
 
   # log-github-event-goodies:
