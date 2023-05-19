@@ -14,6 +14,7 @@ jobs:
     steps:
       - name: Logging
         id: zip_name_windows
+        shell: bash
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             ZIP_NAME: RapidVideOCR-${{ steps.run_pyinstaller.outputs.VERSION }}-${{ runner.os }}-${{ runner.arch }}-no-installer.zip
@@ -23,8 +24,10 @@ jobs:
           echo "Win_ZIP_FULL_PATH=$Win_DIST_DIR\$ZIP_WIN_NAME" >> $GITHUB_OUTPUT
 
       - name: Print
+        shell: pwsh
         run: |
           Write-Host ${{ steps.zip_name_windows.outputs.Win_ZIP_FULL_PATH }}
+          Write-Host "hello"
 
 
   # log-github-event-goodies:
