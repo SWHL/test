@@ -15,3 +15,4 @@ jobs:
       run: |
         echo ${{ github.ref }}
         echo "hello world"
+        echo ${{ github.ref_name }}
