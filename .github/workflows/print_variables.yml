@@ -21,7 +21,7 @@ jobs:
         txt_path="RapidVideOCR.txt"
         mv $py_path $txt_path
         line_num=$(sed -n "/self.version = /=" $txt_path)
-        new_version=${{ github.ref_name }}
+        new_version="${{ github.ref_name }}"
         sed -i '${line_num}d' $txt_path
         sed -i '${line_num}i\        self.version = "$new_version"' $txt_path
         mv $txt_path $py_path
