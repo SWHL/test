@@ -17,10 +17,12 @@ jobs:
     - name: Print tag info
       run: |
         mv ui/* .
-        mv RapidVideOCR.py RapidVideOCR.txt
-        line_num=$(sed -n "/self.version = /=" RapidVideOCR.txt)
+        py_path="RapidVideOCR.py"
+        txt_path="RapidVideOCR.txt"
+        mv $py_path $txt_path
+        line_num=$(sed -n "/self.version = /=" $txt_path)
         new_version=${{ github.ref_name }}
-        sed -i '37s/        self.version = "v0.0.4"/        self.version = "$new_version"/g' RapidVideOCR.txt
-        mv RapidVideOCR.txt RapidVideOCR.py
+        sed -i '37s/        self.version = "v0.0.4"/        self.version = "$new_version"/g' $txt_path
+        mv $txt_path $py_path
         echo "VERSION=0.0.4" >> $GITHUB_OUTPUT
-        echo $(grep -n 'self.version = ' RapidVideOCR.txt)
+        echo $(grep -n 'self.version = ' $txt_path)
