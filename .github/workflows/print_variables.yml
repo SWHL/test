@@ -25,4 +25,4 @@ jobs:
         sed -i '37s/        self.version = "v0.0.4"/        self.version = "$new_version"/g' $txt_path
         mv $txt_path $py_path
         echo "VERSION=0.0.4" >> $GITHUB_OUTPUT
-        echo $(grep -n 'self.version = ' $txt_path)
+        echo $(grep -n 'self.version = ' $py_path)
