@@ -13,6 +13,4 @@ jobs:
     steps:
     - name: Print tag info
       run: |
-        echo ${{ github.ref }}
-        echo "hello world"
-        echo ${{ github.ref_name }}
+        echo "VERSION=${{ github.ref_name }}"
