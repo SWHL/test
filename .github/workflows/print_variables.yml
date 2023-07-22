@@ -22,7 +22,8 @@ jobs:
         mv $py_path $txt_path
         line_num=$(sed -n "/self.version = /=" $txt_path)
         new_version=${{ github.ref_name }}
-        sed -i '37s/        self.version = "v0.0.4"/        self.version = "$new_version"/g' $txt_path
+        sed -i '${line_num}d' $txt_path
+        sed -i '${line_num} i "        self.version = "$new_version""' $txt_path
         mv $txt_path $py_path
         echo "VERSION=0.0.4" >> $GITHUB_OUTPUT
         echo $(grep -n 'self.version = ' $py_path)
