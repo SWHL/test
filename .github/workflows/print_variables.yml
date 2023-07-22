@@ -1,45 +1,16 @@
-name: Event Loggger
+name: Release
+
 on:
   push:
-    branches: main
+    tags:
+    - 'v*'
 
 jobs:
-  build:
-    name: build
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: ['windows-2022']
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Logging
-        id: zip_name_windows
-        shell: bash
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            ZIP_NAME: RapidVideOCR-${{ steps.run_pyinstaller.outputs.VERSION }}-${{ runner.os }}-${{ runner.arch }}-no-installer.zip
-            Win_DIST_DIR: ${{ github.workspace }}\ocrweb\rapidocr_web\dist\
-        run: |
-          echo $ZIP_NAME
-          echo "Win_ZIP_FULL_PATH=$Win_DIST_DIR\$ZIP_NAME" >> $GITHUB_OUTPUT
-
-      - name: Print
-        shell: pwsh
-        run: |
-          Write-Host ${{ steps.zip_name_windows.outputs.Win_ZIP_FULL_PATH }}
-          Write-Host "hello"
-
-
-  # log-github-event-goodies:
-  #   name: "LOG Everything on GitHub Event"
-  #   runs-on: macos-13
-  #   steps:
-  #     - name: Pull latest code
-  #       uses: actions/checkout@v3
-
-  #     - name: Logging
-  #       env:
-  #           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #           ZIP_NAME: RapidVideOCR-${{ steps.run_pyinstaller.outputs.VERSION }}-${{ runner.os }}-${{ runner.arch }}-no-installer.zip
-  #       run: |
-  #         echo $ZIP_NAME
+    - name: Print tag info
+      run: |
+        echo ${{ github.ref }}
