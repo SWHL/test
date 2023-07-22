@@ -26,7 +26,7 @@ jobs:
         new_version="${{ github.ref_name }}"
         echo $new_version
 
-        new_line='        self.version = "$new_version"'
+        new_line='        self.version = "'${new_version}'"'
         echo $new_line
 
         sed -i '${line_num}d' $txt_path
