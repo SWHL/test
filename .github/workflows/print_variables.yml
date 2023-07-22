@@ -22,6 +22,5 @@ jobs:
         new_version=${{ github.ref_name }}
         sed -i '37s/        self.version = "v0.0.4"/        self.version = "$new_version"/g' RapidVideOCR.txt
         mv RapidVideOCR.txt RapidVideOCR.py
-        pyinstaller RapidVideOCR.spec
         echo "VERSION=0.0.4" >> $GITHUB_OUTPUT
         echo $(grep -n 'self.version = ' RapidVideOCR.txt)
