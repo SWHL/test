@@ -1,28 +1,14 @@
-name: Release
-
+name: Event Loggger
 on:
   push:
     tags:
     - v*
 
 jobs:
-  release:
-    name: Create Release
-    runs-on: macos-13
-
+  log-github-event-goodies:
+    name: "LOG Everything on GitHub Event"
+    runs-on: ubuntu-latest
     steps:
-    - name: Pull latest code
-      uses: actions/checkout@v3
-
-    - name: Print tag info
-      run: |
-        mv ui/* .
-        py_path="RapidVideOCR.py"
-        txt_path="RapidVideOCR.txt"
-        mv $py_path $txt_path
-        line_num=$(sed -n "/self.version = /=" $txt_path)
-        new_version="${{ github.ref_name }}"
-        sed -i "${line_num}d" $txt_path
-        sed -i "${line_num}i\        self.version = '${new_version}'" $txt_path
-        mv $txt_path $py_path
-        echo $(grep -n "self.version = " $py_path)
+      - name: Logging
+        run: |
+          echo "${{toJSON(github.event)}}"
