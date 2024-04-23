@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-    - Desktop-v*
+    - v*
 
 jobs:
   release:
