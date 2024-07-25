@@ -1,13 +1,9 @@
 # PaddleOCR
 
 name: 🐛 Bug Report
-
-# title: " "
-
 description: Problems with PaddleOCR
 labels: [bug, triage]
 body:
-
   - type: markdown
       attributes:
         value: |
