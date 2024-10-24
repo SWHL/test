@@ -1,5 +1,8 @@
 name: Event Loggger
 on:
+  branches:    
+    - main
+    - 'releases/**'
   push:
     tags:
     - v*
