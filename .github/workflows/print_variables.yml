@@ -1,11 +1,11 @@
 name: Event Loggger
 on:
-  branches:
-    - main
-    - 'releases/**'
   push:
+    branches:
+      - main
+      - 'release/**'
     tags:
-    - v*
+      - v*
 
 jobs:
   log-github-event-goodies:
