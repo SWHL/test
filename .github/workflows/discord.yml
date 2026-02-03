@@ -1,10 +1,7 @@
 name: discord message
 on:
   release:
-    types: [published]  # 只在正式发布 release 时触发（不包括草稿）
-  push:
-    branches:
-    - main
+    types: [published]
 
 jobs:
   build:
@@ -12,27 +9,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Get release info
-        id: get_release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          BODY=$(gh api graphql -f query='
-            query($owner:String!, $repo:String!, $tag:String!) {
-              repository(owner:$owner, name:$repo) {
-                release(tagName:$tag) {
-                  description
-                }
-              }
-            }' \
-            -f owner='${{ github.repository_owner }}' \
-            -f repo='${{ github.event.repository.name }}' \
-            -f tag='${{ github.event.release.tag_name }}' \
-            --jq '.data.repository.release.description')
-
-          ESCAPED_BODY=$(echo "$BODY" | jq -Rs .)
-          echo "release_body=$ESCAPED_BODY" >> $GITHUB_OUTPUT
 
       - name: Send Discord notification
         env:
@@ -42,11 +18,10 @@ jobs:
         uses: Ilshidur/action-discord@0.4.0
         with:
           args: |
-            🚀 **New Release Published!**
+            🚀 **New Release!** ${{ github.event.release.name }}
 
-            **Repository:** ${{ github.repository }}
             **Tag:** ${{ github.event.release.tag_name }}
             **Author:** ${{ github.event.release.author.login }}
 
             **Release Notes:**
-            ${{ fromJSON(steps.get_release.outputs.release_body) }}
+            ${{ github.event.release.body }}
