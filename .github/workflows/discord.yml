@@ -2,9 +2,9 @@ name: discord message
 on:
   release:
     types: [published]  # 只在正式发布 release 时触发（不包括草稿）
-  # push:
-  #   branches:
-  #   - main
+  push:
+    branches:
+    - main
 
 jobs:
   build:
@@ -18,7 +18,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # 获取当前触发 release 的 body 和 tag
           BODY=$(gh api graphql -f query='
             query($owner:String!, $repo:String!, $tag:String!) {
               repository(owner:$owner, name:$repo) {
@@ -32,7 +31,6 @@ jobs:
             -f tag='${{ github.event.release.tag_name }}' \
             --jq '.data.repository.release.description')
 
-          # 转义为单行 JSON 字符串，安全用于后续步骤
           ESCAPED_BODY=$(echo "$BODY" | jq -Rs .)
           echo "release_body=$ESCAPED_BODY" >> $GITHUB_OUTPUT
 
