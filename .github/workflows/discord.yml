@@ -1,10 +1,10 @@
 name: discord message
 on:
-  # release:
-  #   types: [published]  # 只在正式发布 release 时触发（不包括草稿）
-  push:
-    branches:
-    - main
+  release:
+    types: [published]  # 只在正式发布 release 时触发（不包括草稿）
+  # push:
+  #   branches:
+  #   - main
 
 jobs:
   build:
@@ -13,22 +13,42 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Get latest release info
+      - name: Get release info
         id: get_release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          RELEASE_BODY=$(gh api repos/${{ github.repository }}/releases/latest --jq '.body')
-          ESCAPED_BODY=$(echo "$RELEASE_BODY" | jq -Rs .)
-          echo "release_body=$ESCAPED BODY" >> $GITHUB_OUTPUT
+          # 获取当前触发 release 的 body 和 tag
+          BODY=$(gh api graphql -f query='
+            query($owner:String!, $repo:String!, $tag:String!) {
+              repository(owner:$owner, name:$repo) {
+                release(tagName:$tag) {
+                  description
+                }
+              }
+            }' \
+            -f owner='${{ github.repository_owner }}' \
+            -f repo='${{ github.event.repository.name }}' \
+            -f tag='${{ github.event.release.tag_name }}' \
+            --jq '.data.repository.release.description')
 
-      - name: Discord notification
+          # 转义为单行 JSON 字符串，安全用于后续步骤
+          ESCAPED_BODY=$(echo "$BODY" | jq -Rs .)
+          echo "release_body=$ESCAPED_BODY" >> $GITHUB_OUTPUT
+
+      - name: Send Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        uses: Ilshidur/action-discord@master
+          DISCORD_USERNAME: Github Actions
+          DISCORD_AVATAR: https://cdn.discordapp.com/avatars/1460099944252702846/e57fd67dc7ca0cc840a0e87a82281bc5.webp?size=80
+        uses: Ilshidur/action-discord@0.4.0
         with:
           args: |
-            A new commit has been pushed to Ilshidur/action-discord.
+            🚀 **New Release Published!**
+
+            **Repository:** ${{ github.repository }}
+            **Tag:** ${{ github.event.release.tag_name }}
+            **Author:** ${{ github.event.release.author.login }}
 
             **Release Notes:**
-            ${{ steps.get_release.outputs.release_body }}
+            ${{ fromJSON(steps.get_release.outputs.release_body) }}
