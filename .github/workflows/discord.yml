@@ -1,62 +1,24 @@
 name: discord message
 on:
-  release:
-    types: [published]  # 只在正式发布 release 时触发（不包括草稿）
+  # release:
+  #   types: [published]  # 只在正式发布 release 时触发（不包括草稿）
+  push:
+    branches:
+    - main
 
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Get release info
-        run: |
-          echo "RELEASE_TITLE=${{ github.event.release.name || github.event.release.tag_name }}" >> $GITHUB_ENV
-          echo "RELEASE_URL=${{ github.event.release.html_url }}" >> $GITHUB_ENV
-          echo "RELEASE_BODY<<EOF_RELEASE_BODY" >> $GITHUB_ENV
-          echo "${{ github.event.release.body }}" >> $GITHUB_ENV
-          echo "EOF_RELEASE_BODY" >> $GITHUB_ENV
-
-      - uses: actions/checkout@master
-      - name: send custom message
-        uses: appleboy/discord-action@v1.2.0
-        with:
-          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          message: The ${{ github.event_name }} event triggered first step.
-          username: "Github Bot"
-          message: |
-            "🚀 New Release: ${{ env.RELEASE_TITLE }}”
-            "${{ env.RELEASE_URL }}"
-            "${{ env.RELEASE_BODY }}"
-
-
-
-# jobs:
-#  notify-discord:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Get release info
-#         run: |
-#           echo "RELEASE_TITLE=${{ github.event.release.name || github.event.release.tag_name }}" >> $GITHUB_ENV
-#           echo "RELEASE_URL=${{ github.event.release.html_url }}" >> $GITHUB_ENV
-#           echo "RELEASE_BODY<<EOF_RELEASE_BODY" >> $GITHUB_ENV
-#           echo "${{ github.event.release.body }}" >> $GITHUB_ENV
-#           echo "EOF_RELEASE_BODY" >> $GITHUB_ENV
-
-#       - name: Send message to Discord
-#         env:
-#           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-#         run: |
-#           curl -X POST -H "Content-Type: application/json" \
-#             -d "{
-#               \"username\": \"GitHub Releases\",
-#               \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
-#               \"embeds\": [{
-#                 \"title\": \"🚀 New Release: ${{ env.RELEASE_TITLE }}\",
-#                 \"url\": \"${{ env.RELEASE_URL }}\",
-#                 \"description\": \"${{ env.RELEASE_BODY }}\",
-#                 \"color\": 3066993,
-#                 \"timestamp\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\"
-#               }]
-#             }" \
-#             "$DISCORD_WEBHOOK_URL"
-
+    - name: Discord notification
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        DISCORD_USERNAME: OSS 117
+        DISCORD_AVATAR: https://resize.programme-television.ladmedia.fr/r/670,670/img/var/premiere/storage/images/tele-7-jours/news-tv/oss-117-le-caire-nid-d-espions-c8-le-show-de-jean-dujardin-4484285/90175763-1-fre-FR/OSS-117-Le-Caire-nid-d-espions-C8-Le-show-de-Jean-Dujardin.jpg
+      uses: Ilshidur/action-discord@master
+      with:
+        args: 'A new commit has been pushed to Ilshidur/action-discord.'
+    - name: Discord notification
+      env:
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      uses: Ilshidur/action-discord@master
