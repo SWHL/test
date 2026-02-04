@@ -6,15 +6,29 @@ on:
     branches:
       - main
 
+# jobs:
+#   setup:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: nearform-actions/github-action-notify-twitter@v1.2.3
+#         with:
+#           message: |
+#             ${{ github.event.repository.name }} ${{ github.event.release.tag_name }} has been released. Check out the release notes: ${{ github.event.release.html_url }}
+#           twitter-app-key: ${{ secrets.TWITTER_APP_KEY }}
+#           twitter-app-secret: ${{ secrets.TWITTER_APP_SECRET }}
+#           twitter-access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+#           twitter-access-token-secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+
+
 jobs:
-  setup:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: nearform-actions/github-action-notify-twitter@v1.2.3
+      - name: Post Twitter Status
+        uses: julb/action-post-twitter-status@v1
         with:
-          message: |
-            ${{ github.event.repository.name }} ${{ github.event.release.tag_name }} has been released. Check out the release notes: ${{ github.event.release.html_url }}
-          twitter-app-key: ${{ secrets.TWITTER_APP_KEY }}
-          twitter-app-secret: ${{ secrets.TWITTER_APP_SECRET }}
-          twitter-access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
-          twitter-access-token-secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+          message: "Hello from Github Action!"
+          twitter_app_consumer_api_key: ${{ secrets.TWITTER_APP_KEY }}
+          twitter_app_consumer_api_secret_key: ${{ secrets.TWITTER_APP_SECRET }}
+          twitter_app_access_token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          twitter_app_access_token_secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
